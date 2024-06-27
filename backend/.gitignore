@@ -9,7 +9,7 @@
 # production
 /build
 
-/secret.js
+secret.js
 
 # misc
 .DS_Store
