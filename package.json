@@ -1,0 +1,15 @@
+{
+  "name": "module1fullstackapp",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "start": "concurrently \"cd backend && node server.js\" \"cd client && npm start\""
+  },
+  "dependencies": {
+    "concurrently": "^4.1.2"
+  },
+  "description": "steps to run the code",
+  "keywords": [],
+  "author": ""
+}
