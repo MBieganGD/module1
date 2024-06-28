@@ -1,34 +1,34 @@
-const mongoose = require("mongoose");
-const getSecret = require("./secret");
-const express = require("express");
-const bodyParser = require("body-parser");
-const logger = require("morgan");
-const Data = require("./data");
+import express from "express";
+import bodyParser from "body-parser";
+import logger from "morgan";
+import mongoose from "mongoose";
+import cors from "cors";
+import { Request, Response } from "express";
+import getSecret from "./secret";
+import Data from "./data";
 
 const API_PORT = 3001;
 const app = express();
 const router = express.Router();
 
-const cors = require("cors");
 app.use(cors());
 
-mongoose.connect(getSecret("dbUri"), {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-});
-let db = mongoose.connection;
-
-db.on("error", console.error.bind(console, "MongoDB connection error:"));
+mongoose
+  .connect(getSecret("dbUri"), {
+    serverSelectionTimeoutMS: 5000,
+  })
+  .then(() => console.log("MongoDB connected"))
+  .catch((err) => console.error("MongoDB connection error:", err));
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(logger("dev"));
 
-router.get("/", (req, res) => {
+router.get("/", (req: Request, res: Response) => {
   res.json({ message: "Hello World" });
 });
 
-router.get("/getData", async (req, res) => {
+router.get("/getData", async (req: Request, res: Response) => {
   try {
     const data = await Data.find();
     res.json({ success: true, data: data });
@@ -37,7 +37,7 @@ router.get("/getData", async (req, res) => {
   }
 });
 
-router.post("/updateData", async (req, res) => {
+router.post("/updateData", async (req: Request, res: Response) => {
   const { id, update } = req.body;
   try {
     await Data.findByIdAndUpdate(id, update);
@@ -47,18 +47,17 @@ router.post("/updateData", async (req, res) => {
   }
 });
 
-router.delete("/deleteData", async (req, res) => {
+router.delete("/deleteData", async (req: Request, res: Response) => {
   const { id } = req.body;
   try {
-    await Data.findByIdAndRemove(id);
+    await Data.findByIdAndDelete(id);
     res.json({ success: true });
   } catch (err) {
     res.json({ success: false, error: err });
   }
 });
 
-router.post("/putData", async (req, res) => {
-  let data = new Data();
+router.post("/putData", async (req: Request, res: Response) => {
   const { id, message } = req.body;
 
   if ((!id && id !== 0) || !message) {
@@ -67,8 +66,9 @@ router.post("/putData", async (req, res) => {
       error: "Invalid Inputs",
     });
   }
-  data.message = message;
-  data.id = id;
+
+  const data = new Data({ id, message });
+
   try {
     await data.save();
     res.json({ success: true });
@@ -79,4 +79,4 @@ router.post("/putData", async (req, res) => {
 
 app.use("/api", router);
 
-app.listen(API_PORT, () => console.log(`port: ${API_PORT}`));
+app.listen(API_PORT, () => console.log(`Server running on port: ${API_PORT}`));

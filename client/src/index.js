@@ -1,9 +1,7 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
+import { jsx as _jsx } from "react/jsx-runtime";
+import { createRoot } from 'react-dom/client';
 import App from './App';
-
-ReactDOM.render(<App />, document.getElementById('root'));
-
-if (module.hot) {
-  module.hot.accept();
-}
+import { register } from './registerServiceWorker';
+const root = createRoot(document.getElementById('root'));
+root.render(_jsx(App, {}));
+register();

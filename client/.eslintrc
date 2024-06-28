@@ -3,19 +3,19 @@
     "browser": true,
     "node": true,
     "commonjs": true,
-    "es6": true
+    "es6": true,
   },
   "parser": "@babel/eslint-parser",
   "parserOptions": {
     "ecmaFeatures": {
-      "jsx": true
+      "jsx": true,
     },
     "ecmaVersion": 2021,
     "sourceType": "module",
     "requireConfigFile": false,
     "babelOptions": {
-      "presets": ["@babel/preset-react"]
-    }
+      "presets": ["@babel/preset-react"],
+    },
   },
   "extends": [
     "eslint:recommended",
@@ -24,16 +24,16 @@
     "plugin:react/recommended",
     "plugin:import/errors",
     "plugin:import/warnings",
-    "plugin:jsx-a11y/recommended"
+    "plugin:jsx-a11y/recommended",
   ],
   "globals": {
     "Atomics": "readonly",
-    "SharedArrayBuffer": "readonly"
+    "SharedArrayBuffer": "readonly",
   },
   "settings": {
     "react": {
-      "version": "detect"
-    }
+      "version": "detect",
+    },
   },
   "plugins": ["react", "react-hooks"],
   "rules": {
@@ -46,9 +46,9 @@
     "react/jsx-filename-extension": [
       1,
       {
-        "extensions": [".js", ".jsx"]
-      }
+        "extensions": [".js", ".jsx"],
+      },
     ],
-    "react/display-name": 1
-  }
+    "react/display-name": 1,
+  },
 }

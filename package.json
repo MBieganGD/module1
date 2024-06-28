@@ -4,12 +4,17 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "start": "concurrently \"cd backend && node server.js\" \"cd client && npm start\""
+    "compile:frontend": "npx tsc -p ./client/tsconfig.json",
+    "compile:backend": "npx tsc -p ./backend/tsconfig.json",
+    "start": "concurrently \"cd backend && node dist/server.js\" \"cd client && npm start\""
   },
   "dependencies": {
     "concurrently": "^4.1.2"
   },
   "description": "steps to run the code",
   "keywords": [],
-  "author": ""
+  "author": "",
+  "devDependencies": {
+    "typescript": "^5.5.2"
+  }
 }
